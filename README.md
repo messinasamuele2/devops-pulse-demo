@@ -59,8 +59,9 @@ La run verde ha superato lint, test, build dei due container e deploy su GitHub 
 
 ## Monitoraggio
 
-- Configura UptimeRobot con controllo HTTP ogni 5 minuti sull'URL pubblico. Imposta un alert email/Telegram: `DOWN` indica indisponibilità, `UP` indica ripristino.
-- Per Sentry creare un progetto Browser, aggiungere `SENTRY_DSN` come secret Actions e integrare l'SDK nel frontend prima del rilascio. Per il test manuale usare il pulsante **Simula errore**: dopo il refresh atteso nell'evento, verificare stack trace, URL e timestamp nella dashboard Sentry.
+- Il workflow `.github/workflows/uptime.yml` verifica ogni 15 minuti che l'URL pubblico risponda HTTP 200 e contenga "DevOps Pulse"; una verifica fallita crea una run fallita visibile in GitHub Actions.
+- UptimeRobot resta opzionale come servizio esterno con notifiche email/Telegram. Un allarme `DOWN` indica indisponibilità; `UP` indica ripristino.
+- Per Sentry creare un progetto Browser e aggiungere `SENTRY_DSN` come secret Actions. Il workflow maschera il valore nei log prima di sostituirlo nel frontend. Per il test manuale usare il pulsante **Simula errore** e verificare stack trace, URL e timestamp nella dashboard Sentry.
 - Per il backend, aggiungere un endpoint health check al monitor e integrare l'SDK server nella versione distribuita.
 
 Interpreta gli alert: un singolo timeout può essere una rete transitoria; due fallimenti consecutivi richiedono controllo; `5xx` richiede ispezione dei log; assenza di eventi Sentry durante un errore simulato indica DSN o CSP errati.
@@ -68,5 +69,6 @@ Interpreta gli alert: un singolo timeout può essere una rete transitoria; due f
 ## Stato della consegna
 
 - GitHub Pages: configurato e verificato con risposta HTTP 200.
+- Uptime: workflow GitHub Actions configurato con controllo schedulato ogni 15 minuti.
 - Docker Desktop: installato in Windows; il test completo `docker compose` resta bloccato fino alla corretta attivazione/amministrativa di WSL/Virtual Machine Platform. Docker richiede un riavvio e l'approvazione amministrativa se Windows mostra il relativo prompt.
-- UptimeRobot e Sentry: integrazione documentata e pronta, ma dashboard, account e screenshot richiedono credenziali esterne dell'utente e non possono essere simulati in questo repository.
+- UptimeRobot e Sentry: richiedono account, configurazione e screenshot esterni dell'utente; il codice non contiene DSN reali e il secret non è stato inventato.

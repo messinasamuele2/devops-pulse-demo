@@ -1,0 +1,19 @@
+name: Public uptime check
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check public endpoint
+        run: |
+          status=$(curl -L --fail --silent --show-error --max-time 20 \
+            --output /tmp/devops-pulse.html \
+            --write-out "%{http_code}" \
+            https://messinasamuele2.github.io/devops-pulse-demo/)
+          test "$status" = "200"
+          grep -q "DevOps Pulse" /tmp/devops-pulse.html

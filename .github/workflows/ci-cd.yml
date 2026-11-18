@@ -17,6 +17,8 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event_name == 'pull_request' && 'staging' || 'development' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,6 +53,7 @@ jobs:
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
+          echo "::add-mask::$SENTRY_DSN"
           python -c "import os, pathlib; p=pathlib.Path('frontend/index.html'); p.write_text(p.read_text().replace('__SENTRY_DSN__', os.environ.get('SENTRY_DSN', '')), encoding='utf-8')"
       - name: Upload frontend
         uses: actions/upload-pages-artifact@v3
