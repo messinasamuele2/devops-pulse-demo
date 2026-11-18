@@ -10,6 +10,14 @@ async function checkHealth() {
   statusElement.className = "status";
   statusElement.textContent = "Controllo API...";
 
+  if (window.location.hostname.endsWith("github.io")) {
+    statusElement.className = "status ok";
+    statusElement.textContent = "Frontend operativo";
+    detailsElement.textContent =
+      "GitHub Pages ospita il frontend; il backend locale usa docker compose.";
+    return;
+  }
+
   try {
     const response = await fetch("/api/health");
     if (!response.ok) throw new Error(`Health check failed: ${response.status}`);
