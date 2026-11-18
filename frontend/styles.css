@@ -1,0 +1,55 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, sans-serif;
+  background: #08111f;
+  color: #eaf2ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 20%, #163a66 0, transparent 35%),
+    linear-gradient(135deg, #08111f, #101a2c);
+}
+
+main { width: min(90vw, 560px); }
+
+.status-card {
+  padding: 32px;
+  border: 1px solid #284363;
+  border-radius: 18px;
+  background: rgb(10 22 40 / 85%);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 35%);
+}
+
+.eyebrow {
+  color: #74d9be;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  font-weight: 800;
+}
+
+h1 { margin: 8px 0 24px; font-size: clamp(32px, 8vw, 56px); }
+.status { min-height: 24px; color: #9fb1c9; }
+.status.ok { color: #74d9be; }
+.status.error { color: #ff9a9a; }
+
+button {
+  margin: 8px 8px 0 0;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  background: #56c6a7;
+  color: #07111d;
+  font-weight: 800;
+}
+
+button.secondary { background: #263a55; color: #eaf2ff; }
+.details { color: #91a4bf; text-align: center; }
+

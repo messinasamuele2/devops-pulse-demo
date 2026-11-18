@@ -1,0 +1,10 @@
+{
+  "name": "devops-demo",
+  "private": true,
+  "scripts": {
+    "lint": "node --check frontend/app.js && node --check backend/src/server.js",
+    "build": "docker build -t devops-demo-frontend ./frontend",
+    "test": "node --test backend/test/*.test.js"
+  }
+}
+

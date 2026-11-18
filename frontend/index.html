@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#08111f">
+    <meta name="sentry-dsn" content="__SENTRY_DSN__">
+    <title>DevOps Pulse</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://browser.sentry-cdn.com/8.47.0/bundle.min.js"
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <main>
+      <section class="status-card">
+        <p class="eyebrow">SYSTEM STATUS</p>
+        <h1>DevOps Pulse</h1>
+        <p id="status" class="status">Controllo API...</p>
+        <button id="health-button" type="button">Verifica salute</button>
+        <button id="error-button" class="secondary" type="button">Simula errore</button>
+      </section>
+      <p id="details" class="details"></p>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

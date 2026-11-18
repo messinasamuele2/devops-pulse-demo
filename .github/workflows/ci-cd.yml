@@ -1,0 +1,61 @@
+name: CI and GitHub Pages deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test backend
+        run: npm test
+      - name: Build frontend container
+        run: docker build --tag devops-demo-frontend ./frontend
+      - name: Build backend container
+        run: docker build --tag devops-demo-backend ./backend
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Configure Sentry DSN
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: |
+          python -c "import os, pathlib; p=pathlib.Path('frontend/index.html'); p.write_text(p.read_text().replace('__SENTRY_DSN__', os.environ.get('SENTRY_DSN', '')), encoding='utf-8')"
+      - name: Upload frontend
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
