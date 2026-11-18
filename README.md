@@ -60,6 +60,7 @@ La run verde ha superato lint, test, build dei due container e deploy su GitHub 
 ## Monitoraggio
 
 - Il workflow `.github/workflows/uptime.yml` verifica ogni 15 minuti che l'URL pubblico risponda HTTP 200 e contenga "DevOps Pulse"; una verifica fallita crea una run fallita visibile in GitHub Actions.
+- Verifica uptime verde: https://github.com/messinasamuele2/devops-pulse-demo/actions/runs/44343248552
 - UptimeRobot resta opzionale come servizio esterno con notifiche email/Telegram. Un allarme `DOWN` indica indisponibilità; `UP` indica ripristino.
 - Per Sentry creare un progetto Browser e aggiungere `SENTRY_DSN` come secret Actions. Il workflow maschera il valore nei log prima di sostituirlo nel frontend. Per il test manuale usare il pulsante **Simula errore** e verificare stack trace, URL e timestamp nella dashboard Sentry.
 - Per il backend, aggiungere un endpoint health check al monitor e integrare l'SDK server nella versione distribuita.
