@@ -51,6 +51,12 @@ Configurazione repository per Pages:
 
 Una volta attivato Pages e effettuato il push su `main`, GitHub mostra l'URL nella run e nell'ambiente `production`.
 
+- Applicazione pubblica: https://messinasamuele2.github.io/devops-pulse-demo/
+- Run CI/CD verde: https://github.com/messinasamuele2/devops-pulse-demo/actions/runs/44335128072
+- Repository: https://github.com/messinasamuele2/devops-pulse-demo
+
+La run verde ha superato lint, test, build dei due container e deploy su GitHub Pages.
+
 ## Monitoraggio
 
 - Configura UptimeRobot con controllo HTTP ogni 5 minuti sull'URL pubblico. Imposta un alert email/Telegram: `DOWN` indica indisponibilità, `UP` indica ripristino.
@@ -58,3 +64,9 @@ Una volta attivato Pages e effettuato il push su `main`, GitHub mostra l'URL nel
 - Per il backend, aggiungere un endpoint health check al monitor e integrare l'SDK server nella versione distribuita.
 
 Interpreta gli alert: un singolo timeout può essere una rete transitoria; due fallimenti consecutivi richiedono controllo; `5xx` richiede ispezione dei log; assenza di eventi Sentry durante un errore simulato indica DSN o CSP errati.
+
+## Stato della consegna
+
+- GitHub Pages: configurato e verificato con risposta HTTP 200.
+- Docker Desktop: installato in Windows; il test completo `docker compose` resta bloccato fino alla corretta attivazione/amministrativa di WSL/Virtual Machine Platform. Docker richiede un riavvio e l'approvazione amministrativa se Windows mostra il relativo prompt.
+- UptimeRobot e Sentry: integrazione documentata e pronta, ma dashboard, account e screenshot richiedono credenziali esterne dell'utente e non possono essere simulati in questo repository.
